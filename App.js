@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -16,6 +16,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import {
@@ -26,12 +27,13 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {Provider} from 'react-redux';
+import {Provider, useSelector, useDispatch} from 'react-redux';
 import {createStore} from 'redux';
-
+import TestRedux from './TestRedux/index';
 const initialState = {
   counter: 0,
 };
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'INCREASE_COUNTER': {
@@ -44,6 +46,8 @@ const reducer = (state = initialState, action) => {
 
   return state;
 };
+
+const store = createStore(reducer);
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -71,10 +75,7 @@ const Section = ({children, title}): Node => {
   );
 };
 
-const App: () => Node = () => {
-  const store = createStore(reducer);
-  console.log(store.getState());
-
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -84,31 +85,11 @@ const App: () => Node = () => {
   return (
     <Provider store={store}>
       <SafeAreaView style={backgroundStyle}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-          <Header />
-          <View
-            style={{
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            }}>
-            <Section title="Step One">
-              Edit <Text style={styles.highlight}>App.js</Text> to change this
-              screen and then come back to see your edits.
-            </Section>
-            <Section title="See Your Changes">
-              <ReloadInstructions />
-            </Section>
-            <Section title="Debug">
-              <DebugInstructions />
-            </Section>
-            <Section title="Learn More">
-              Read the docs to discover what to do next:
-            </Section>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+        <View>
+          <Section title="Step One">
+            <TestRedux />
+          </Section>
+        </View>
       </SafeAreaView>
     </Provider>
   );
