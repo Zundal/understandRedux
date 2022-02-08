@@ -7,13 +7,18 @@ const TestRedux = () => {
   const cnt = useSelector(state => state.counter);
   console.log(cnt);
 
-  const execButton = () => {
-    dispatch({type: 'INCREASE_COUNTER', payload: '1'});
+  const execButtonPlus = () => {
+    dispatch({type: 'INCREASE_COUNTER'});
+  };
+
+  const execButtonMinus = () => {
+    dispatch({type: 'DECREASE_COUNTER'});
   };
 
   return (
     <>
-      <Button title="plus" onPress={execButton} />
+      <Button title="plus" onPress={execButtonPlus} />
+      <Button title="minus" onPress={execButtonMinus} />
     </>
   );
 };
